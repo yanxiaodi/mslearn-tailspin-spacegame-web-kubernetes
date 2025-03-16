@@ -60,14 +60,16 @@ stages:
           - task: KubernetesManifest@1
             displayName: Create imagePullSecret
             inputs:
-              action: createSecret
-              connectionType: azureResourceManager
-              secretName: $(imagePullSecret)
-              dockerRegistryEndpoint: 'Container Registry Connection'
+              action: 'createSecret'
+              connectionType: 'azureResourceManager'
               azureSubscriptionConnection: 'Kubernetes Cluster Connection'
               azureResourceGroup: 'tailspin-space-game-rg'
               kubernetesCluster: 'tailspinspacegame23765'
+              useClusterAdmin: true
               namespace: 'default'
+              secretType: 'dockerRegistry'
+              secretName: '$(imagePullSecret)'
+              dockerRegistryEndpoint: 'Container Registry Connection'
           - task: KubernetesManifest@1
             displayName: Deploy to Kubernetes cluster
             inputs:
